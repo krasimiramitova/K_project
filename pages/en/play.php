@@ -49,16 +49,14 @@ function guess($guess, $arr, $guess_array, $mistake)
 		}
 	}
 }	
-$guess='Ф';
+$guess='а';
 //guess('а', $arr, $guess_array,$mistake);
 $result=guess($guess, $arr, $guess_array,$mistake);
 if (is_numeric($result))
 	{echo "You almost guess";
 		$mistake=$result;
-		//var_dump($mistake);
 	}
 else {$guess_array=$result;
-	//var_dump($guess_array);
 	}
 
 
