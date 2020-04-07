@@ -11,6 +11,8 @@ play <a href="../bg/play.php">бг</a>
 
 //start the game
 	$word='Argentina'; 			//will read from database
+	$tryings=10;				//will read from level information in database
+
 	$word=mb_strtoupper($word); 		//make the input uppercase 
 	$count_empty=mb_strlen($word);		//defining the length of the word
 	$arr=preg_split('//u', $word, null, PREG_SPLIT_NO_EMPTY);		//make the word characters in an array
@@ -72,6 +74,9 @@ while ($count_empty>0)
 		}
 	else
 	{echo 'CHOOSE A LETTER';}
+	$tryings=$tryings-$mistake;
+	echo 'You have '.$tryings.' tries left';
+	echo '<img src="../../img/'.$tryings.'.jpg" class="img" alt="'.$tryings.'">';
 }
 
 include '../../includes/footer.php';
