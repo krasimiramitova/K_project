@@ -11,8 +11,21 @@ play <a href="../bg/play.php">бг</a>
 
 //start the game
 	$word='Argentina'; 			//will read from database
-	$tryings=10;				//will read from level information in database
-
+	$level_id=2;				//will read from level information in database
+//transform data from database
+	switch ($level_) 
+		{
+		case (1 or 4):
+			$tryings=10;
+			break;
+		case (2 or 5):
+			$tryings=8;
+			break;
+		case (3 or 6):
+			$tryings=6;
+			break;
+		}
+	
 	$word=mb_strtoupper($word); 		//make the input uppercase 
 	$count_empty=mb_strlen($word);		//defining the length of the word
 	$arr=preg_split('//u', $word, null, PREG_SPLIT_NO_EMPTY);		//make the word characters in an array
