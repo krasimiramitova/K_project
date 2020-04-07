@@ -8,30 +8,13 @@ play <a href="../bg/play.php">бг</a>
 
 </p>
 <?php
-//letter table
-$leter='A';
-echo '<table>';
-	for ($k=1; $k<4; $k++)
-	{echo '<tr>';
-		for ($l=1; $l<11; $l++)
-		{echo '<td>
-			<form action="" method="get">
-			<input type = "submit" name="letter" value = "'.$leter.'">
-			</form>
-			</td>';
-		if ($leter=='Z') {break;}
-		$leter++;
-		}
-	echo '</tr>';
-	}
-echo '</table>';
-//game
-	$word='Argentina';
-	$word=mb_strtoupper($word);
-	$count_empty=mb_strlen($word);
-	$guess_array=[];
-	$arr=preg_split('//u', $word, null, PREG_SPLIT_NO_EMPTY);
-	for ($i=0; $i<$count_empty; $i++)
+
+//start the game
+	$word='Argentina'; 			//will read from database
+	$word=mb_strtoupper($word); 		//make the input uppercase 
+	$count_empty=mb_strlen($word);		//defining the length of the word
+	$arr=preg_split('//u', $word, null, PREG_SPLIT_NO_EMPTY);		//make the word characters in an array
+	for ($i=0; $i<$count_empty; $i++)	//nulling $guess_array depending on the word
 	{if ($arr[$i]!=' ')
 		{$guess_array[$i]='_ ';
 		echo '_ ';}
@@ -40,39 +23,56 @@ echo '</table>';
 		echo '<p></p>';}
 	}
 echo '<p></p>';
-$mistake=0;
-//
-	
-$q=0;
-if (!empty($_GET['letter']))
-{
-	$guess=$_GET['letter'];
-//die;
-//	while ($count_empty>0)
-//	{
-		$result=guess($guess, $arr, $guess_array,$mistake);
-		if (is_numeric($result))
-			{echo "You almost guess";
-				$mistake=$result;
+//defining variables
+$mistake=0;					//nulling $mistake
+$guess_array=[];				//an array that keeps the result of all the guesses in the particular word
+$q=0;						
+$guess_letters=[];				//an array that keeps all the picked letters from the form
+//letter table
+while ($count_empty>0)
+	{
+	$leter='A';
+	echo '<table>';
+		for ($k=1; $k<4; $k++)
+		{echo '<tr>';
+			for ($l=1; $l<11; $l++)
+			{echo '<td>
+				<form action="" method="get">
+				<input type = "submit"';
+			for ($q=0; $q<count($guess_letters); $q++)		//check for used letter
+			{if ($leter=$guess_letters[$q])
+				{echo 'disabled="disabled"';}
 			}
-		else {$guess_array=$result;
+			echo 'name="letter" value = "'.$leter.'">
+				</form>
+				</td>';
+			if ($leter=='Z') {break;}
+			$leter++;
 			}
-		$arr=$guess_array;
-
-	$count_empty=0;
-	for ($h=0; $h<count($arr); $h++)
-		{
-			if ($arr[$h]=='_ ')
-			{$count_empty++;}
+		echo '</tr>';
 		}
-
-
-	$guess_letters[$q]=$_GET['letter'];
-	$guess=$guess_letters[$q];
-	$q++;	
-//	}
+	echo '</table>';
+	
+	if (!empty($_GET['letter']))
+		{$guess=$_GET['letter'];					//taking guess from user
+		$result=guess($guess, $arr, $guess_array,$mistake);	//taking result from guess function
+		if (is_numeric($result))				//checking if the guess is right
+			{echo "You almost guess!";
+				$mistake=$result;			//new value for mistake if the guess isn't right
+			}
+		else {$guess_array=$result;}				//new value for $guess_array if the guess is right
+		$count_empty=0;						//count _ to check the need for repeat
+		for ($h=0; $h<count($arr); $h++)
+			{
+			if ($arr[$h]=='_ ')
+				{$count_empty++;}
+			}
+		$guess_letters[$q]=$guess;
+		$q++;	
+		}
+	else
+	{echo 'CHOOSE A LETTER';}
 }
-else
-{echo 'CHOOSE A LETTER';}
+
 include '../../includes/footer.php';
 ?>
