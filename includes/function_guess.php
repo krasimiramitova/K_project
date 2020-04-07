@@ -1,7 +1,6 @@
 <?php 
 function guess($guess, $arr, $guess_array, $mistake)
 {	
-	$guess=mb_strtoupper($guess);
 	for ($j=0; $j<count($arr); $j++)
 	{
 		if  ($arr[$j]==$guess)
