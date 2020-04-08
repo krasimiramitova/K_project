@@ -1,6 +1,7 @@
 <?php 
 include '../../includes/header.php';
 include '../../includes/function_guess.php';
+include '../../includes/db_connect.php';
 ?>
 play <a href="../bg/play.php">бг</a>
 <p>
@@ -8,12 +9,19 @@ play <a href="../bg/play.php">бг</a>
 
 </p>
 <?php
+include '../../includes/read_from_categories.php';
 
 //start the game
 	$word='Argentina'; 			//will read from database
+//	SELECT `word`, `level_id` FROM `games` WHERE 1
+//$read_query = "SELECT word, level_id FROM `games` WHERE game_id=".mt_rand() AND ;
+//
+//$result = mysqli_query($conn, $read_query);
+
+
 	$level_id=2;				//will read from level information in database
 //transform data from database
-	switch ($level_) 
+	switch ($level_id) 
 		{
 		case (1 or 4):
 			$tryings=10;
@@ -29,6 +37,8 @@ play <a href="../bg/play.php">бг</a>
 	$word=mb_strtoupper($word); 		//make the input uppercase 
 	$count_empty=mb_strlen($word);		//defining the length of the word
 	$arr=preg_split('//u', $word, null, PREG_SPLIT_NO_EMPTY);		//make the word characters in an array
+//	echo count ($arr);
+//	die;
 	for ($i=0; $i<$count_empty; $i++)	//nulling $guess_array depending on the word
 	{if ($arr[$i]!=' ')
 		{$guess_array[$i]='_ ';
@@ -69,7 +79,7 @@ while ($count_empty>0)
 	echo '</table>';
 	
 	if (!empty($_GET['letter']))
-		{$guess=$_GET['letter'];					//taking guess from user
+		{$guess=$_GET['letter'];					//taking guess from $_GET
 		$result=guess($guess, $arr, $guess_array,$mistake);	//taking result from guess function
 		if (is_numeric($result))				//checking if the guess is right
 			{echo "You almost guess!";
