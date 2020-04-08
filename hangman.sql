@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time:  4 апр 2020 в 17:00
--- Версия на сървъра: 10.1.37-MariaDB
--- PHP Version: 7.2.12
+-- Generation Time:  8 апр 2020 в 05:51
+-- Версия на сървъра: 10.1.29-MariaDB
+-- PHP Version: 7.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `hangman`
+-- Database: `hangmn`
 --
 
 -- --------------------------------------------------------
@@ -48,6 +48,14 @@ CREATE TABLE `categories` (
   `language_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Схема на данните от таблица `categories`
+--
+
+INSERT INTO `categories` (`category_id`, `category`, `language_id`) VALUES
+(1, 'animals', 1),
+(2, 'животни', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -56,13 +64,21 @@ CREATE TABLE `categories` (
 
 CREATE TABLE `games` (
   `game_id` int(11) NOT NULL,
-  `player_id` int(11) NOT NULL,
+  `added by` int(11) DEFAULT NULL,
   `word` varchar(255) NOT NULL,
-  `date_added` datetime NOT NULL,
-  `language_id` text NOT NULL,
-  `category_id` text NOT NULL,
-  `level_id` int(11) NOT NULL
+  `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `language_id` int(11) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `level_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Схема на данните от таблица `games`
+--
+
+INSERT INTO `games` (`game_id`, `added by`, `word`, `date_added`, `language_id`, `category_id`, `level_id`) VALUES
+(1, NULL, 'bear', '2020-04-08 06:47:32', 1, 1, NULL),
+(2, NULL, 'мечка', '2020-04-08 06:47:32', 2, 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -107,6 +123,14 @@ CREATE TABLE `languages` (
   `language` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Схема на данните от таблица `languages`
+--
+
+INSERT INTO `languages` (`language_id`, `language`) VALUES
+(1, 'en'),
+(2, 'бг');
+
 -- --------------------------------------------------------
 
 --
@@ -116,8 +140,20 @@ CREATE TABLE `languages` (
 CREATE TABLE `levels` (
   `level_id` int(11) NOT NULL,
   `level_name` varchar(250) NOT NULL,
-  `language_id` varchar(100) NOT NULL
+  `language_id` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Схема на данните от таблица `levels`
+--
+
+INSERT INTO `levels` (`level_id`, `level_name`, `language_id`) VALUES
+(1, 'easy', 1),
+(2, 'лесно', 2),
+(3, 'medium', 1),
+(4, 'средно трудно', 2),
+(5, 'hard', 1),
+(6, 'трудно', 2);
 
 -- --------------------------------------------------------
 
@@ -134,6 +170,13 @@ CREATE TABLE `players` (
   `player_rank` varchar(100) NOT NULL,
   `date_deleted` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Схема на данните от таблица `players`
+--
+
+INSERT INTO `players` (`player_id`, `username`, `password`, `register_date`, `e-mail`, `player_rank`, `date_deleted`) VALUES
+(1, 'Krasi', '1234', '2020-04-08 06:30:00', 'kr_mitova@abv.bg', '', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -248,13 +291,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `games_players`
@@ -272,13 +315,13 @@ ALTER TABLE `inbox`
 -- AUTO_INCREMENT for table `levels`
 --
 ALTER TABLE `levels`
-  MODIFY `level_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `level_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `players`
 --
 ALTER TABLE `players`
-  MODIFY `player_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `player_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `play_statuses`
