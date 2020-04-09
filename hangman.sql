@@ -1,9 +1,9 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time:  8 апр 2020 в 05:51
+-- Generation Time:  9 апр 2020 в 22:40
 -- Версия на сървъра: 10.1.29-MariaDB
 -- PHP Version: 7.1.12
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `hangmn`
+-- Database: `hangman`
 --
 
 -- --------------------------------------------------------
@@ -54,7 +54,9 @@ CREATE TABLE `categories` (
 
 INSERT INTO `categories` (`category_id`, `category`, `language_id`) VALUES
 (1, 'animals', 1),
-(2, 'животни', 2);
+(2, 'животни', 2),
+(3, 'countries', 1),
+(4, 'държави', 2);
 
 -- --------------------------------------------------------
 
@@ -77,26 +79,30 @@ CREATE TABLE `games` (
 --
 
 INSERT INTO `games` (`game_id`, `added by`, `word`, `date_added`, `language_id`, `category_id`, `level_id`) VALUES
-(1, NULL, 'bear', '2020-04-08 06:47:32', 1, 1, NULL),
-(2, NULL, 'мечка', '2020-04-08 06:47:32', 2, 2, NULL);
+(1, NULL, 'bear', '2020-04-08 06:47:32', 1, 1, 1),
+(2, NULL, 'мечка', '2020-04-08 06:47:32', 2, 2, 2),
+(3, NULL, 'China', '2020-04-08 07:25:16', 1, 3, 3),
+(4, NULL, 'Китай', '2020-04-08 07:26:17', 2, 4, 4),
+(5, NULL, 'camel', '2020-04-08 06:47:32', 1, 1, 1),
+(6, NULL, 'dog', '2020-04-08 06:47:32', 1, 1, 1),
+(7, NULL, 'cat', '2020-04-08 06:47:32', 1, 1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `games_players`
+-- Структура на таблица `game_players`
 --
 
-CREATE TABLE `games_players` (
+CREATE TABLE `game_players` (
   `play_id` int(11) NOT NULL,
-  `play_date_start` datetime NOT NULL,
-  `play_date_finished` datetime NOT NULL,
-  `play_duration` time NOT NULL,
-  `game_id` int(11) NOT NULL,
-  `player_id` int(11) NOT NULL,
-  `play_status` varchar(250) NOT NULL,
-  `date_deleted` datetime NOT NULL,
-  `role_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `play_date_start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `play_date_finished` timestamp NULL DEFAULT NULL,
+  `play_duration` time DEFAULT NULL,
+  `date_deleted` date DEFAULT NULL,
+  `play_status` int(11) DEFAULT NULL,
+  `player_id` int(11) DEFAULT NULL,
+  `game_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -165,18 +171,19 @@ CREATE TABLE `players` (
   `player_id` int(11) NOT NULL,
   `username` varchar(250) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `register_date` datetime NOT NULL,
+  `register_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `e-mail` varchar(250) NOT NULL,
-  `player_rank` varchar(100) NOT NULL,
-  `date_deleted` datetime NOT NULL
+  `player_rank` varchar(100) DEFAULT NULL,
+  `role_id` int(11) NOT NULL DEFAULT '2',
+  `date_deleted` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Схема на данните от таблица `players`
 --
 
-INSERT INTO `players` (`player_id`, `username`, `password`, `register_date`, `e-mail`, `player_rank`, `date_deleted`) VALUES
-(1, 'Krasi', '1234', '2020-04-08 06:30:00', 'kr_mitova@abv.bg', '', '0000-00-00 00:00:00');
+INSERT INTO `players` (`player_id`, `username`, `password`, `register_date`, `e-mail`, `player_rank`, `role_id`, `date_deleted`) VALUES
+(1, 'Krasi', '1234', '2020-04-08 06:30:00', 'kr_mitova@abv.bg', '', 0, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -189,6 +196,18 @@ CREATE TABLE `play_statuses` (
   `status_name` varchar(250) NOT NULL,
   `language_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Схема на данните от таблица `play_statuses`
+--
+
+INSERT INTO `play_statuses` (`status_id`, `status_name`, `language_id`) VALUES
+(1, 'lost', 1),
+(2, 'изгубена', 2),
+(3, 'won', 1),
+(4, 'спечелена', 2),
+(5, 'saved', 1),
+(6, 'запазена', 2);
 
 -- --------------------------------------------------------
 
@@ -212,6 +231,14 @@ CREATE TABLE `roles` (
   `role_id` int(11) NOT NULL,
   `role_name` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Схема на данните от таблица `roles`
+--
+
+INSERT INTO `roles` (`role_id`, `role_name`) VALUES
+(1, 'admin'),
+(2, 'player');
 
 --
 -- Indexes for dumped tables
@@ -238,11 +265,13 @@ ALTER TABLE `games`
   ADD PRIMARY KEY (`game_id`);
 
 --
--- Indexes for table `games_players`
+-- Indexes for table `game_players`
 --
-ALTER TABLE `games_players`
+ALTER TABLE `game_players`
   ADD PRIMARY KEY (`play_id`),
-  ADD KEY `play_date_start` (`play_date_start`);
+  ADD KEY `play_status` (`play_status`),
+  ADD KEY `player_id` (`player_id`),
+  ADD KEY `game_id` (`game_id`);
 
 --
 -- Indexes for table `inbox`
@@ -261,7 +290,8 @@ ALTER TABLE `levels`
 -- Indexes for table `players`
 --
 ALTER TABLE `players`
-  ADD PRIMARY KEY (`player_id`);
+  ADD PRIMARY KEY (`player_id`),
+  ADD KEY `role_id` (`role_id`);
 
 --
 -- Indexes for table `play_statuses`
@@ -291,18 +321,18 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `games_players`
+-- AUTO_INCREMENT for table `game_players`
 --
-ALTER TABLE `games_players`
+ALTER TABLE `game_players`
   MODIFY `play_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -327,13 +357,25 @@ ALTER TABLE `players`
 -- AUTO_INCREMENT for table `play_statuses`
 --
 ALTER TABLE `play_statuses`
-  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Ограничения за дъмпнати таблици
+--
+
+--
+-- Ограничения за таблица `game_players`
+--
+ALTER TABLE `game_players`
+  ADD CONSTRAINT `result of the game` FOREIGN KEY (`play_status`) REFERENCES `play_statuses` (`status_id`),
+  ADD CONSTRAINT `what plays` FOREIGN KEY (`game_id`) REFERENCES `games` (`game_id`),
+  ADD CONSTRAINT `who plays` FOREIGN KEY (`player_id`) REFERENCES `players` (`player_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
