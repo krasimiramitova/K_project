@@ -9,7 +9,7 @@ play <a href="../bg/play.php">бг</a>
 
 </p>
 <?php
-include '../../includes/read_from_categories.php';
+include '../../includes/read_from_words.php';
 
 //start the game
 	$word='Argentina'; 			//will read from database
