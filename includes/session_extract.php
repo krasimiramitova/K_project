@@ -1,0 +1,9 @@
+<?php
+	$index_guessed=$_SESSION['index_guessed'];
+	$guess_letters=$_SESSION['guess_letters'];
+	$get_argument=$_SESSION['get_argument'];
+	$arr=$_SESSION['arr'];
+	$guess_array=$_SESSION['guess_array'];
+	$mistake=$_SESSION['mistake'];
+	$tryings=$_SESSION['tryings'];
+	$try=$_SESSION['try'];

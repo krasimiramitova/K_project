@@ -1,106 +1,68 @@
 <?php 
 include '../../includes/header.php';
-include '../../includes/function_guess.php';
+include '../../includes/function_guess_letter.php';
 include '../../includes/db_connect.php';
 ?>
-play <a href="../bg/play.php">бг</a>
+play <a href="../bg/play.php"> бг </a>
+play <a href="new_game.php"> new game </a>
 <p>
 	under construction
 
 </p>
 <?php
-include '../../includes/read_from_words.php';
-
-//start the game
-	$word='Argentina'; 			//will read from database
-//	SELECT `word`, `level_id` FROM `games` WHERE 1
-//$read_query = "SELECT word, level_id FROM `games` WHERE game_id=".mt_rand() AND ;
-//
-//$result = mysqli_query($conn, $read_query);
-
-
-	$level_id=2;				//will read from level information in database
-//transform data from database
-	switch ($level_id) 
-		{
-		case (1 or 4):
-			$tryings=10;
-			break;
-		case (2 or 5):
-			$tryings=8;
-			break;
-		case (3 or 6):
-			$tryings=6;
-			break;
-		}
-	
-	$word=mb_strtoupper($word); 		//make the input uppercase 
-	$count_empty=mb_strlen($word);		//defining the length of the word
-	$arr=preg_split('//u', $word, null, PREG_SPLIT_NO_EMPTY);		//make the word characters in an array
-//	echo count ($arr);
-//	die;
-	for ($i=0; $i<$count_empty; $i++)	//nulling $guess_array depending on the word
-	{if ($arr[$i]!=' ')
-		{$guess_array[$i]='_ ';
-		echo '_ ';}
-		else
-		{$guess_array[$i]=$arr[$i];
-		echo '<p></p>';}
-	}
-echo '<p></p>';
-//defining variables
-$mistake=0;					//nulling $mistake
-$guess_array=[];				//an array that keeps the result of all the guesses in the particular word
-$q=0;						
-$guess_letters=[];				//an array that keeps all the picked letters from the form
+session_start();
+include '../../includes/prepare_for_game.php'; 							//transform data from database for algorithm
+$try=1; 
+$get_argument='letter1';
+include '../../includes/letter_table_en.php';
+for ($r=1; $r<=$try; $r++)
+//while ($count_empty>0)
+	{	if ($r>1) {include '../../includes/session_extract.php';}
 //letter table
-while ($count_empty>0)
-	{
-	$leter='A';
-	echo '<table>';
-		for ($k=1; $k<4; $k++)
-		{echo '<tr>';
-			for ($l=1; $l<11; $l++)
-			{echo '<td>
-				<form action="" method="get">
-				<input type = "submit"';
-			for ($q=0; $q<count($guess_letters); $q++)		//check for used letter
-			{if ($leter=$guess_letters[$q])
-				{echo 'disabled="disabled"';}
-			}
-			echo 'name="letter" value = "'.$leter.'">
-				</form>
-				</td>';
-			if ($leter=='Z') {break;}
-			$leter++;
-			}
-		echo '</tr>';
-		}
-	echo '</table>';
-	
-	if (!empty($_GET['letter']))
-		{$guess=$_GET['letter'];					//taking guess from $_GET
-		$result=guess($guess, $arr, $guess_array,$mistake);	//taking result from guess function
-		if (is_numeric($result))				//checking if the guess is right
+	if (isset($_GET[$get_argument]))
+		{
+		$guess_letters[$index_guessed]=$_GET[$get_argument];
+		$guess=$guess_letters[$index_guessed];							//taking guess from $_GET
+			echo '<p>Your '.$try.' guess is '.$guess.'</p>'; 
+		$result=guess_letter($guess, $arr, $guess_array,$mistake);		//taking result from guess function
+		if (is_numeric($result))										//checking if the guess is right
 			{echo "You almost guess!";
-				$mistake=$result;			//new value for mistake if the guess isn't right
+				$mistake=$result;										//new value for mistake if the guess isn't right
 			}
-		else {$guess_array=$result;}				//new value for $guess_array if the guess is right
-		$count_empty=0;						//count _ to check the need for repeat
+		else {$guess_array=$result;}									//new value for $guess_array if the guess is right
+		$count_empty=0;													//count _ to check the need for repeat
 		for ($h=0; $h<count($arr); $h++)
 			{
-			if ($arr[$h]=='_ ')
+			if ($guess_array[$h]=='_ ')
 				{$count_empty++;}
 			}
-		$guess_letters[$q]=$guess;
-		$q++;	
+		$index_guessed++;	
+		$tryings=$tryings-$mistake;
+
+			echo '<p></p>$get_argument: ';	var_dump($get_argument);
+			echo '<p></p>$tryings: ';				var_dump($tryings);
+			echo '<p></p>$guess_array: ';		var_dump($guess_array);
+			echo '<p></p>$guess_letters: ';		var_dump($guess_letters);
+			echo '<p></p>$count_empty: ';		var_dump($count_empty);			echo '<p></p>';
+
+
+//	echo 'You have '.$tryings.' tries left';
+//	echo '<img src="../../img/'.$tryings.'.jpg" class="img" alt="'.$tryings.'">';
+		if ($count_empty==0)
+			{echo 'You won!';}
+		elseif ($tryings==0)
+			{echo "A hangman's familly lost their father";}
+		else 
+			{$try++; 
+			$get_argument='letter'.$try;
+			include '../../includes/letter_table_en.php';
+			include '../../includes/session_load.php';
+			}
+		if ($try==5) {break; } // just to break the cycle
 		}
 	else
-	{echo 'CHOOSE A LETTER';}
-	$tryings=$tryings-$mistake;
-	echo 'You have '.$tryings.' tries left';
-	echo '<img src="../../img/'.$tryings.'.jpg" class="img" alt="'.$tryings.'">';
-}
-
-include '../../includes/footer.php';
+		{echo '<p>Make a guess!</p>';
+		break; }
+	}
+	include '../../includes/footer.php';
 ?>
