@@ -10,14 +10,14 @@ $leter='A';
 			{echo '<td>
 				<form action="" method="get">
 				<input type = "submit"';
-			if (!empty($guess_letters))
+			if (!empty($_SESSION['guess_letters']))
 			{$q=0;	
-			for ($q=0; $q<count($guess_letters); $q++)		//check for used letters
-				{if ($leter==$guess_letters[$q])
+			for ($q=0; $q<count($_SESSION['guess_letters']); $q++)		//check for used letters
+				{if ($leter==$_SESSION['guess_letters'][$q])
 					{echo 'disabled="disabled" style="text-decoration: line-through;"';}
 				}
 			}
-			echo 'name="'.$get_argument.'" value = "'.$leter.'" >
+			echo 'name="'.$_SESSION['get_argument'].'" value = "'.$leter.'" >
 				</form>
 				</td>';
 			if ($leter=='Z') {break;}

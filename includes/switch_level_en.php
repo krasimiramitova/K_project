@@ -2,13 +2,13 @@
 switch ($_SESSION['level']) 
 		{
 		case ('easy'):
-			$tryings=10;
+			$fails=10;
 			break;
 		case ('medium'):
-			$tryings=8;
+			$fails=8;
 			break;
 		case ('hard'):
-			$tryings=6;
+			$fails=6;
 			break;
 		}
 	

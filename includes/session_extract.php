@@ -1,5 +1,6 @@
 <?php
-	$index_guessed=$_SESSION['index_guessed'];
+if (!isset($_SESSION))
+{
 	$guess_letters=$_SESSION['guess_letters'];
 	$get_argument=$_SESSION['get_argument'];
 	$arr=$_SESSION['arr'];
@@ -7,3 +8,13 @@
 	$mistake=$_SESSION['mistake'];
 	$tryings=$_SESSION['tryings'];
 	$try=$_SESSION['try'];
+}
+else {
+	$guess_letters=[];
+	$get_argument=1;
+	$arr=[];
+	$guess_array=[];
+	$mistake=0;
+	$tryings=10;
+	$try=1;
+	}
