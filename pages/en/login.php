@@ -1,59 +1,97 @@
 <?php 
-include '../includes/hangman_connect.php';
-
- ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Login Page</title>
-	<link rel="stylesheet" type="text/css" href="style1.css">
-</head>
-<body>
+include '../../includes/header.php';
+include '../../includes/db_connect.php'; 
+session_start();
+//include'../includes/hangman_connect.php';
+if (!isset($_SESSION['player_id']))
+	{
+ 	echo '
 	<div id="container">
 	<form method="post" action="">
 	<p>Enter Username</p>
-	<input type="text" name="username">
+	<input type="text" name="username"';
+	if (isset($_POST["username"])) 
+		{$select_username = "SELECT player_id, username FROM `players` 
+	WHERE username ='". $_POST['username'] ."'";
+	$username_result = mysqli_query($conn,$select_username);
+		if(mysqli_num_rows($username_result)==0)
+		{echo ">Wrong username";}
+		else {$_SESSION['username']=$_POST['username'];
+			echo 'value="'.$_SESSION['username'].'">';}
+		}
+	echo '<p></p>
 	<p>Enter Password</p>
-	<input type="password" name="password">
-    <!-- <p>Verify Password</p>
-	<input type="password" name="verify_password"> -->
+	<input type="password" name="password">';
+	if
+		//(isset($_SESSION["username"])and
+		(isset($_POST['submit']))
+		//)
+		{
+			//var_dump($_POST);
+		if (($_POST['password'])=='')
+			{echo"You haven't entered a password";}
+		else
+			{$select_password = "SELECT player_id,password FROM `players` 
+			WHERE username ='". $_POST['username'] ."' AND password='".$_POST['password']."'";
+			$password_result = mysqli_query($conn,$select_password);
+			//var_dump(mysqli_num_rows($password_result));
+			if(mysqli_num_rows($password_result)==0)
+				{echo "Wrong password";
+		         echo '<p>Do you need a new password? - <a href="new_password.php"> get it here </a> </p>';}
+			else 
+				{$player_row = mysqli_fetch_assoc($password_result);
+ 				$_SESSION['player_id']=$player_row['player_id'];
+				}
+			}
+		}
+	echo '
 	<input type="submit" name="submit" id="btn" value="Login">
 	</form>
-	</div>
-</body>
-</html>
+	</div>';
+	}
+else 
+	{
+	echo '<p>Wellcome, '.$_SESSION['username'].'!</p>';
+	echo '<p>Would you <a href="new_game.php"> PLAY </a> or go <a href="home.php"> HOME </a>?</p>';
+	}
+//var_dump($_SESSION);
+//	session_start();
+//	if( isset($_POST["submit"])){
+//		$flag = true;
+//		if( isset($_POST["username"])){
+//			$_SESSION['username'] = $_POST["username"];
+//		}else{
+//			$flag = false;
+//			echo 'Enter Username!'; 
+//			}
+//		if(isset($_POST["password"])){
+//			$_SESSION['password'] = $_POST["password"]; 
+//		}else{
+//		$flag = false;
+//		echo 'Enter password!';
+//			}
+//		}
+//	var_dump($_SESSION);die;
+//}else{
+//	$select_query = "SELECT player_id, username FROM `players` 
+//	WHERE username ='". $_SESSION['username'] ."' AND password ='". $_SESSION['password'] ."'";
+//
+//	$mysqli_result = mysqli_query($conn,$select_query);
+//	if(mysqli_num_rows($mysqli_result)>0){
+//	echo 'You Have Successfully Logged in';
+	//exit();
+//	$player_row = mysqli_fetch_assoc($mysqli_result);
+ //	$_SESSION['player_id']=$player_row['player_id'];
+//	echo '<p>Wellcome, '.$_SESSION['username'].'!</p>';
+//	echo '<p>Would you <a href="new_game.php"> PLAY </a> or go <a href="home.php"> HOME </a>?</p>';
+//	}else{
+//	echo 'You have Entered Incorrect Username or Password';
+//	echo '<p>Do you need a new password? - <a href="new_password.php"> get it here </a> </p>';
+//	}
+//}
+ 
+include '../../includes/footer.php';
 
-<?php 
-
-if( isset($_POST["submit"])){
-$flag = true;
-if( isset($_POST["username"])){
-	$username = $_POST["username"];
-}else{
-	$flag = false;
-	echo 'Enter Username!'; 
-}
-if(isset($_POST["password"])){
-	$password = $_POST["password"];
-}else{
-	$flag = false;
-	echo 'Enter password!';
-}
-
-$select_query = "SELECT * FROM `players` WHERE username ='". $username ."' AND password ='". $password ."'";
-
-$mysqli_result = mysqli_query($conn,$select_query);
-
-if(mysqli_num_rows($mysqli_result)){
-	echo 'You Have Successfully Logged in';
-	exit();
-}else{
-	echo 'You have Entered Incorrect Username or Password';
-	exit();
-}
-}
-?>
 
 
 

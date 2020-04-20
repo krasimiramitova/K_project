@@ -1,4 +1,9 @@
  <?php 
+ if (!isset($_SESSION['username']))
+ 	{
+ 	if (isset($_POST['username']))
+ 		{$_SESSION['username']=$_POST['username'];}
+ 	}
  if ((isset($_POST['category']))AND(isset($_POST['level'])))
 	{$_SESSION['category']=$_POST['category'];
 	$_SESSION['level']=$_POST['level'];
@@ -24,11 +29,12 @@ if (!isset($_SESSION['fails']))
 		{$_SESSION['word']=mb_strtoupper($words[$num_game][1]); 		//makes the input uppercase 
 		$count_empty=mb_strlen($_SESSION['word']);
 		}																//defining the length of the word}
-echo '<p>You play in category "'.$_SESSION['category'].'" <p>';
-echo '<p>You play at level "'.$_SESSION['level'].'"<p>';
-echo '<p>You play to guess "'.$_SESSION['word'].'"<p>';
+echo '<p class="menu">category: '.$_SESSION['category'].' <p>';
+echo '<p class="menu">level: '.$_SESSION['level'].'<p>';
+//echo '<p class="menu">You play to guess "'.$_SESSION['word'].'"<p>';
 
-//include '../../includes/insert_a_new_game_into_games_players.php'; 	//start the game
+include '../../includes/insert_a_new_game_into_games_players.php'; 		//start the game
+
 //defining variables
 $mistake=0;																//nulling $mistake
 if (!isset($_SESSION['guess_letters'])) 
@@ -39,7 +45,7 @@ if (!isset($_SESSION['arr']))
 //an array that keeps the result of all right guesses in the word	
 if (!isset($_SESSION['guess_array'])) 
 	{$_SESSION['guess_array']=[];
-	for ($i=0; $i<$count_empty; $i++)	//nulling $guess_array depending on the word
+	for ($i=0; $i<$count_empty; $i++)	//nulling   $guess_array depending on the word
 		{if ($_SESSION['arr'][$i]!=' ')
 			{$_SESSION['guess_array'][$i]='_ ';
 			}
