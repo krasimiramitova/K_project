@@ -2,10 +2,13 @@
 include '../../includes/header.php';
 ?>
 logout <a href="../bg/logout.php">бг</a>
-<p>
-	under construction
-</p>
-
+<?php
+session_start();
+session_destroy();
+unset($_SESSION['username']);
+$_SESSION['message'] = "You are now logged out!";
+header("location: login.php");
+?>
 <?php
 include '../../includes/footer.php';
 ?>
