@@ -1,7 +1,6 @@
  <?php 
  if (!isset($_SESSION['username']))
- 	{
- 	if (isset($_POST['username']))
+ 	{if (isset($_POST['username']))
  		{$_SESSION['username']=$_POST['username'];}
  	}
  if ((isset($_POST['category']))AND(isset($_POST['level'])))
@@ -10,8 +9,7 @@
 	}
 if (!isset($_SESSION['fails']))
 	{switch ($_SESSION['level']) 
-		{
-		case ('easy'):
+		{case ('easy'):
 			$fails=10;
 			break;
 		case ('medium'):
@@ -23,15 +21,16 @@ if (!isset($_SESSION['fails']))
 		}
 	$_SESSION['fails']=$fails;
 	}
+
 //get data from database
-	include '../../includes/read_from_words.php';
+include '../../includes/read_from_words.php';
 	if (!isset($_SESSION['word']))
 		{$_SESSION['word']=mb_strtoupper($words[$num_game][1]); 		//makes the input uppercase 
 		$count_empty=mb_strlen($_SESSION['word']);
 		}																//defining the length of the word}
 echo '<p class="menu">category: '.$_SESSION['category'].' <p>';
 echo '<p class="menu">level: '.$_SESSION['level'].'<p>';
-//echo '<p class="menu">You play to guess "'.$_SESSION['word'].'"<p>';
+echo '<p class="menu">You play to guess "'.$_SESSION['word'].'"<p>';
 
 include '../../includes/insert_a_new_game_into_games_players.php'; 		//start the game
 
@@ -58,5 +57,4 @@ if (!isset($_SESSION['try']))
 	else {$_SESSION['try']++;}
 if (!isset($_SESSION['get_argument']))
 	{$_SESSION['get_argument']='letter'.$_SESSION['try'];}
-
-echo '<p></p>';
+echo '<p></p>';-

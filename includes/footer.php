@@ -1,3 +1,5 @@
-<h1>this is the footer</h1>
+<h6>съвместна разработка на Кристиян Христов и Красимира Митова</h6>
+<h6>Vratsa Software, PHP 2019</h6>
+
 </body>
 </html>

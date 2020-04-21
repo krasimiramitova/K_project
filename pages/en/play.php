@@ -1,6 +1,7 @@
 <?php 
 include '../../includes/header.php';
 include '../../includes/function_guess_letter.php';
+include '../../includes/function_guess_word.php';
 include '../../includes/db_connect.php';
 ?>
 play <a href="../bg/play.php"> бг </a>
@@ -31,26 +32,19 @@ if (isset($_GET[$_SESSION['get_argument']]))
 	$_SESSION['fails']=$_SESSION['fails']-$mistake;
 	echo '<img src="../../img/'.$_SESSION['fails' ].'.jpg" class="img" alt="'.$_SESSION['fails'].'" height="42" width="42">';
 	if ($count_empty==0)
-		{echo '<p>You won!</p>';
-		echo '
-		<form method="post" action="">';
-			if (isset($_SESSION['username']))
-				{echo '<input type="hidden" name="username" value="'. $_SESSION['username'].'">
-			<input type="hidden" name="player_id" value="'. $_SESSION['player_id'].'">';}
-			echo '<input type="hidden" name="level" value="'. $_SESSION['level'].'">
-			<input type="hidden" name="category" value="'. $_SESSION['category'].'">
-			<input type="submit" name="play_again" id="btn" value="PLAY AGAIN">
-		</form>';
+		{echo '<p>You saved that man!</p><p>Would you try to hang another one?</p>';
+		
+		include '../../includes/session_transmitt.php';
 		$play_status=3;
 		include '../../includes/function_update_status.php';
 		
 		 session_destroy();
 		}
 	elseif ($_SESSION['fails']==0)
-		{echo "<p>A hangman's familly lost their father</p>";
+		{echo "<p>A hangman's familly lost their father</p><p>Would you try to save another one?</p>";
+		include '../../includes/session_transmitt.php';
 		$play_status=1; 
 		include '../../includes/function_update_status.php';
-		echo '<p>Click <a href="new_game.php"> NEW GAME </a>, if you like to save another one?</p>';
 		session_destroy();
 		}
 
@@ -76,5 +70,24 @@ if (isset($_GET[$_SESSION['get_argument']]))
 	echo '<p></p>';
 	include '../../includes/letter_table_en.php';							//letter table
 	}
+echo '<form method="post" action="">
+		<p>Fast guess</p>
+	<input type="text" name="fast_guess">
+	<input type="submit" name="submit" id="btn" value="guess">
+		</form>';
+if (isset ($_POST['fast_guess']))
+{	$guess=$_POST['fast_guess'];
+	$right_guess=guess_word($guess, $_SESSION['word']);
+	if ($right_guess==0)
+	{	echo '<p>You saved that man!</p><p>Would you try to hang another one?</p>';
+		include '../../includes/session_transmitt.php';
+		$play_status=3;
+		include '../../includes/function_update_status.php';
+		session_destroy();
+	}
+	else 
+	{$_SESSION['fails']=$_SESSION['fails']-$mistake;}
+}
 
+	
 include '../../includes/footer.php';
