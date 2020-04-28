@@ -40,7 +40,8 @@ echo '<div class="container">';
 			{if (isset($_SESSION['level']))
 				{$level=($_SESSION['level']);}
 			else {$level='easy';}
-				switch ($level) 
+				
+			switch ($level) 
 				{case ('easy'):
 					$fails=10;
 					break;
