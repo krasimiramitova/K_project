@@ -1,12 +1,16 @@
  <?php 
- if (!isset($_SESSION['username']))
+ if (isset($_POST['play']))
  	{if (isset($_POST['username']))
  		{$_SESSION['username']=$_POST['username'];}
- 	}
- if ((isset($_POST['category']))AND(isset($_POST['level'])))
-	{$_SESSION['category']=$_POST['category'];
+	if (isset($_POST['player_id']))	
+		{$_SESSION['player_id']=$_POST['player_id'];}
 	$_SESSION['level']=$_POST['level'];
-	}
+	$_SESSION['category']=$_POST['category'];
+ 	}
+
+if (!isset($_SESSION['guess_letters'])) 
+	{$_SESSION['guess_letters']=[];}									//an array that keeps all the picked letters from the form
+
 if (!isset($_SESSION['fails']))
 	{switch ($_SESSION['level']) 
 		{case ('easy'):
@@ -28,16 +32,14 @@ include '../../includes/read_from_words.php';
 		{$_SESSION['word']=mb_strtoupper($words[$num_game][1]); 		//makes the input uppercase 
 		$count_empty=mb_strlen($_SESSION['word']);
 		}																//defining the length of the word}
-echo '<p class="menu">category: '.$_SESSION['category'].' <p>';
-echo '<p class="menu">level: '.$_SESSION['level'].'<p>';
-echo '<p class="menu">You play to guess "'.$_SESSION['word'].'"<p>';
+//echo '<p class="menu">category: '.$_SESSION['category'].' <p>';
+//echo '<p class="menu">level: '.$_SESSION['level'].'<p>';
+//echo '<p class="menu">You play to guess "'.$_SESSION['word'].'"<p>';
 
 include '../../includes/insert_a_new_game_into_games_players.php'; 		//start the game
 
 //defining variables
 $mistake=0;																//nulling $mistake
-if (!isset($_SESSION['guess_letters'])) 
-	{$_SESSION['guess_letters']=[];}									//an array that keeps all the picked letters from the form
 //transforms the word's characters into an array
 if (!isset($_SESSION['arr'])) 
 	{$_SESSION['arr']=preg_split('//u', $_SESSION['word'], null, PREG_SPLIT_NO_EMPTY);}		
@@ -57,4 +59,14 @@ if (!isset($_SESSION['try']))
 	else {$_SESSION['try']++;}
 if (!isset($_SESSION['get_argument']))
 	{$_SESSION['get_argument']='letter'.$_SESSION['try'];}
-echo '<p></p>';-
+
+echo '<p></p>';
+
+//echo '<pre>';
+//var_dump($_GET);
+var_dump($_SESSION);
+//var_dump($_POST);
+//echo '</pre>';
+
+
+

@@ -7,7 +7,7 @@ if (!isset($_SESSION['player_id']))
 	<form method="post" action="">
 	<p>Enter Username</p>
 	<input type="text" name="username"';
-	if (isset($_POST["username"]))
+	if (isset($_POST["submit"])&&isset($_POST["username"]))
 	{	if ($_POST['username']==''){echo "You haven't entered a username";} 
 		else
 		{$select_username = "SELECT player_id, username FROM `players` WHERE username ='". $_POST['username'] ."'";
@@ -42,6 +42,7 @@ if (!isset($_SESSION['player_id']))
 	<input type="submit" name="submit" id="btn" value="Login">
 	</form>
 	</div>';
+//	var_dump($_SESSION);
 	}
 else 
 	{

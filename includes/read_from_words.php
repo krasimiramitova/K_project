@@ -11,8 +11,8 @@ if( mysqli_num_rows($result) > 0 )
 	{$words[$i][0]=$row['game_id'];
 	 $words[$i][1]=$row['word'];
 	 $i++;}
+	 $num_game=mt_rand(1,$i-1);
+	$_SESSION['game_id']=$words[$num_game][0];
 }
-$num_game=mt_rand(1,$i-1);
-$_SESSION['game_id']=$words[$i-1][0];
 
 			

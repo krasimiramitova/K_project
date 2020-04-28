@@ -2,26 +2,26 @@
 //$guess_letters=['D','K'];
 //$try=2;
 //$get_argument='letter'.$try;
-$leter='A';
+$letter='A';
 	echo '<table>';
 		for ($k=1; $k<4; $k++)
 		{echo '<tr>';
 			for ($l=1; $l<11; $l++)
 			{echo '<td>
 				<form action="" method="get">
-				<input type = "submit"';
+				<input class="btn btn-default" type = "submit"';
 			if (!empty($_SESSION['guess_letters']))
 			{$q=0;	
 			for ($q=0; $q<count($_SESSION['guess_letters']); $q++)		//check for used letters
-				{if ($leter==$_SESSION['guess_letters'][$q])
+				{if ($letter==$_SESSION['guess_letters'][$q])
 					{echo 'disabled="disabled" style="text-decoration: line-through;"';}
 				}
 			}
-			echo 'name="'.$_SESSION['get_argument'].'" value = "'.$leter.'" >
+			echo 'name="letter" value = "'.$letter.'" >
 				</form>
 				</td>';
-			if ($leter=='Z') {break;}
-			$leter++;
+			if ($letter=='Z') {break;}
+			$letter++;
 			}
 		echo '</tr>';
 		}
