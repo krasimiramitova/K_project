@@ -88,13 +88,7 @@ echo '<div class="container">';
 					$_SESSION['guess_array'][$i]='<p></p>';
 					}
 				}
-			}
-		//see the guessings till now
-		echo '<h1>';
-		for ($i=0; $i<count($_SESSION['arr']); $i++)
-			{echo $_SESSION['guess_array'][$i];}
-		echo '</h1>';
-		echo '<img src="../../img/'.$_SESSION['fails' ].'.jpg" alt="'.$_SESSION['fails'].'" height="50%" width="50%">';
+			}		
 	
 		//taking guess from $_GET and check if it is in the word ($_SESSION['arr'])
 		if (isset($_GET['letter']))
@@ -108,6 +102,7 @@ echo '<div class="container">';
 			if (is_numeric($result_guess))		
 		//new value for mistake if the guess isn't right
 				{$mistake=$result_guess;}
+			var_dump($result_guess);
 			if (isset($_SESSION['fails']))
 				{$_SESSION['fails']=$_SESSION['fails']-$mistake;}
 		//new value for $guess_array if the guess is right
@@ -116,6 +111,20 @@ echo '<div class="container">';
 
 		//count _ to check the need for repeat									
 		
+
+		//see the guessings till now
+//		echo '<div class="container">';
+//			echo '<div class="col-md-4>';
+//				echo '<h1>';
+				for ($i=0; $i<count($_SESSION['arr']); $i++)
+					{echo $_SESSION['guess_array'][$i];}
+//				echo '</h1>';
+//			echo '</div>';
+//			echo '<div class="col-md-8>';
+				echo '<img src="../../img/'.$_SESSION['fails' ].'.jpg" alt="'.$_SESSION['fails'].'" height="30%" width="30%">';
+//			echo '</div>';
+//		echo '</div>';
+
 		$count_empty=0;													
 		for ($h=0; $h<count($_SESSION['arr']); $h++)
 			{
@@ -148,8 +157,8 @@ echo '<div class="container">';
 		else
 			{
 				if ($_SESSION['fails']==1)
-					{echo 'You can make '.$_SESSION['fails'].' more mistake';}
-				else {echo 'You can make '.$_SESSION['fails'].' more mistakes';}
+					{echo 'You have '.$_SESSION['fails'].' mistake to be done.';}
+				else {echo 'You have '.$_SESSION['fails'].' mistakes  to be done.';}
 				if (isset($_SESSION['username']))
 					{echo '<p>Make a guess,'.$_SESSION['username'].'!</p>';} 
 				else {echo '<p>Make another guess!</p>';}
