@@ -9,29 +9,21 @@ echo '<div class="container">';
 	echo '<div class="col-md-7 col-md-offset-1">'; 
 
 		if (isset($_POST['play']))
-		 	{if (isset($_POST['username']))
+			{if (isset($_POST['username']))
 		 		{$_SESSION['username']=$_POST['username'];}
 			if (isset($_POST['player_id']))	
 				{$_SESSION['player_id']=$_POST['player_id'];}
-			}
-
-		if (!isset($_SESSION['level']))
-			{
-				if (isset($_POST['level']))
-					{
-						$_SESSION['level']=$_POST['level'];
-					}
+			if (!isset($_SESSION['level']))
+				{if (isset($_POST['level']))
+					{$_SESSION['level']=$_POST['level'];}
 				else {$_SESSION['level']='easy';}
-			}
-
-		if (!isset($_SESSION['category']))
-			{
-				if (isset($_POST['category']))
-					{
-						$_SESSION['category']=$_POST['category'];
-					}
+				}
+			if (!isset($_SESSION['category']))
+				{if (isset($_POST['category']))
+					{$_SESSION['category']=$_POST['category'];}
 				else {$_SESSION['category']='animal';}
-			}
+				}
+ 			}
 
 		if (!isset($_SESSION['guess_letters'])) 
 			{$_SESSION['guess_letters']=[];}			//an array that keeps all the picked letters from the form
@@ -80,13 +72,9 @@ echo '<div class="container">';
 		//nulling   $guess_array depending on the word
 			for ($i=0; $i<$count_empty; $i++)	
 				{if ($_SESSION['arr'][$i]!=' ')
-					{
-						$_SESSION['guess_array'][$i]='_ ';
-					}
+					{$_SESSION['guess_array'][$i]='_ ';}
 				else
-					{
-					$_SESSION['guess_array'][$i]='<p></p>';
-					}
+					{$_SESSION['guess_array'][$i]='<p></p>';}
 				}
 			}		
 	
@@ -101,8 +89,14 @@ echo '<div class="container">';
 		//checking if the guess is right		
 			if (is_numeric($result_guess))		
 		//new value for mistake if the guess isn't right
-				{$mistake=$result_guess;}
-			var_dump($result_guess);
+				{if (isset($_SESSION['username']))
+					{echo "You almost guess,".$_SESSION['username']."!";}
+				else {echo "You almost guess! Try again!";}
+				$mistake=$result_guess;	}
+			else {$_SESSION['guess_array']=$result_guess;}								
+		//new value for $guess_array if the guess is right
+
+
 			if (isset($_SESSION['fails']))
 				{$_SESSION['fails']=$_SESSION['fails']-$mistake;}
 		//new value for $guess_array if the guess is right
@@ -115,10 +109,10 @@ echo '<div class="container">';
 		//see the guessings till now
 //		echo '<div class="container">';
 //			echo '<div class="col-md-4>';
-//				echo '<h1>';
+				echo '<h1>';
 				for ($i=0; $i<count($_SESSION['arr']); $i++)
 					{echo $_SESSION['guess_array'][$i];}
-//				echo '</h1>';
+				echo '</h1>';
 //			echo '</div>';
 //			echo '<div class="col-md-8>';
 				echo '<img src="../../img/'.$_SESSION['fails' ].'.jpg" alt="'.$_SESSION['fails'].'" height="30%" width="30%">';
@@ -147,8 +141,15 @@ echo '<div class="container">';
 			}
 		elseif ($_SESSION['fails']==0)
 			{
-				echo "<p>A hangman's family has just lost it's father</p>
-				<p>Would you try to save another one,".$_SESSION['username']."?</p>";
+				if (isset($_SESSION['username']))
+					{
+					echo "<p>A hangman's familly lost their father</p><p>Would you try to save another one,".$_SESSION['username']."?</p>";
+					}
+				else 
+					{
+					echo "<p>A hangman's familly lost their father</p><p>Would you try to save another one?</p>";
+					echo '<p>You can <a class="btn btn-default" href="sign_up.php">sign up</a> or <a class="btn btn-default" href="login.php">login</a> if you want to get more options.</p>';
+					}
 				include '../../includes/session_transmitt.php';
 				$play_status=1; 
 				include '../../includes/function_update_status.php';

@@ -13,12 +13,11 @@ play <a href="../bg/play.php"> бг </a>
 </p>
 <?php
 
-if (isset($_GET[$_SESSION['get_argument']]))
+if (isset($_GET['letter']))
 	{
-	$_SESSION['guess_letters'][]=$_GET[$_SESSION['get_argument']];
-	$guess=$_GET[$_SESSION['get_argument']];						//taking guess from $_GET
+	$_SESSION['guess_letters'][]=$_GET['letter'];			
 //		echo '<p>Your '.($_SESSION['try']-1).' guess is '.$guess.'</p>'; 
-	$result_guess=guess_letter($guess, $_SESSION['arr'], $_SESSION['guess_array']);		//taking result from guess function
+	$result_guess=guess_letter($_GET['letter'], $_SESSION['arr'], $_SESSION['guess_array']);		//taking result from guess function
 	if (is_numeric($result_guess))										//checking if the guess is right
 		{if (isset($_SESSION['username']))
 			{echo "You almost guess,".$_SESSION['username']."!";}
@@ -46,7 +45,15 @@ if (isset($_GET[$_SESSION['get_argument']]))
 		 session_destroy();
 		}
 	elseif ($_SESSION['fails']==0)
-		{echo "<p>A hangman's familly lost their father</p><p>Would you try to save another one,".$_SESSION['username']."?</p>";
+		{if (isset($_SESSION['username']))
+			{
+			echo "<p>A hangman's familly lost their father</p><p>Would you try to save another one,".$_SESSION['username']."?</p>";
+			}
+		else 
+			{
+			echo "<p>A hangman's familly lost their father</p><p>Would you try to save another one?</p>";
+			echo '<p>You can <a class="btn btn-default" href="sign_up.php">sign up</a> or <a class="btn btn-default" href="login.php">login</a> if you want to get more options.</p>';
+			}
 		include '../../includes/session_transmitt.php';
 		$play_status=1; 
 		include '../../includes/function_update_status.php';

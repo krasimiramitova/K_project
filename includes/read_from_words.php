@@ -1,6 +1,7 @@
 <?php
 if (!isset($_SESSION['game_id']))
-	{
+	{if (isset($_SESSION['category']))
+		{
 		$read_query = "SELECT games.word, games.game_id FROM `games` 
 		LEFT JOIN categories ON (games.category_id= categories.category_id)
 		LEFT JOIN levels ON (games.level_id= levels.level_id)
@@ -19,6 +20,8 @@ if (!isset($_SESSION['game_id']))
 				$num_game=mt_rand(1,$i-1);
 				$_SESSION['game_id']=$words[$num_game][0];
 			}
+		}
+	else {echo "Ops!!! We've lost the category you play in!";}
 	}
 
 			

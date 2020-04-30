@@ -9,7 +9,7 @@
 			{$_SESSION['level']=$_POST['level'];}
 		else {$_SESSION['level']='easy';}
 		}
-		if (!isset($_SESSION['category']))
+	if (!isset($_SESSION['category']))
 		{if (isset($_POST['category']))
 			{$_SESSION['category']=$_POST['category'];}
 		else {$_SESSION['category']='animal';}
@@ -70,8 +70,8 @@ if (!isset($_SESSION['guess_array']))
 if (!isset($_SESSION['try']))
 	{$_SESSION['try']=1;}
 	else {$_SESSION['try']++;}
-if (!isset($_SESSION['get_argument']))
-	{$_SESSION['get_argument']='letter'.$_SESSION['try'];}
+//if (!isset($_SESSION['get_argument']))
+//	{$_SESSION['get_argument']='letter'.$_SESSION['try'];}
 
 echo '<p></p>';
 
