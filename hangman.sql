@@ -1,9 +1,9 @@
-﻿-- phpMyAdmin SQL Dump
+-- phpMyAdmin SQL Dump
 -- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time:  9 апр 2020 в 22:40
+-- Generation Time: 30 апр 2020 в 11:57
 -- Версия на сървъра: 10.1.29-MariaDB
 -- PHP Version: 7.1.12
 
@@ -53,10 +53,10 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`category_id`, `category`, `language_id`) VALUES
-(1, 'animals', 1),
-(2, 'животни', 2),
-(3, 'countries', 1),
-(4, 'държави', 2);
+(1, 'animal', 1),
+(2, 'животнo', 2),
+(3, 'country', 1),
+(4, 'държавa', 2);
 
 -- --------------------------------------------------------
 
@@ -103,6 +103,58 @@ CREATE TABLE `game_players` (
   `player_id` int(11) DEFAULT NULL,
   `game_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Схема на данните от таблица `game_players`
+--
+
+INSERT INTO `game_players` (`play_id`, `play_date_start`, `play_date_finished`, `play_duration`, `date_deleted`, `play_status`, `player_id`, `game_id`) VALUES
+(1, '2020-04-19 20:33:26', '2020-04-20 08:33:47', '12:00:21', NULL, 3, 1, 7),
+(2, '2020-04-19 20:41:44', NULL, NULL, NULL, NULL, NULL, 7),
+(3, '2020-04-20 09:56:52', NULL, NULL, NULL, NULL, NULL, 7),
+(4, '2020-04-20 09:59:18', NULL, NULL, NULL, NULL, NULL, 7),
+(5, '2020-04-20 09:59:27', '2020-04-26 08:27:45', '22:28:18', NULL, 3, 1, 7),
+(6, '2020-04-26 09:53:55', NULL, NULL, NULL, NULL, NULL, 6),
+(7, '2020-04-26 10:02:49', '2020-04-26 09:06:08', '00:56:41', NULL, 3, 1, 1),
+(8, '2020-04-26 14:50:44', NULL, NULL, NULL, NULL, 1, 5),
+(9, '2020-04-26 14:54:46', '2020-04-26 14:01:11', '00:53:35', NULL, 3, 1, 6),
+(10, '2020-04-26 15:13:21', NULL, NULL, NULL, NULL, 1, 1),
+(11, '2020-04-26 15:16:13', NULL, NULL, NULL, NULL, 1, 5),
+(13, '2020-04-26 15:21:24', NULL, NULL, NULL, NULL, NULL, 6),
+(14, '2020-04-26 15:21:40', '2020-04-26 14:22:25', '00:59:15', NULL, 3, NULL, 1),
+(15, '2020-04-26 15:26:19', '2020-04-26 14:26:48', '00:59:31', NULL, 3, NULL, 7),
+(16, '2020-04-26 15:31:02', '2020-04-26 14:31:23', '00:59:39', NULL, 3, NULL, 1),
+(17, '2020-04-26 15:31:30', NULL, NULL, NULL, NULL, NULL, 5),
+(18, '2020-04-26 15:32:48', NULL, NULL, NULL, NULL, NULL, 5),
+(19, '2020-04-26 15:32:57', NULL, NULL, NULL, NULL, NULL, 1),
+(20, '2020-04-27 20:13:43', NULL, NULL, NULL, NULL, 1, 6),
+(21, '2020-04-27 20:16:52', NULL, NULL, NULL, NULL, 1, 1),
+(22, '2020-04-27 20:17:06', NULL, NULL, NULL, NULL, 1, 7),
+(23, '2020-04-27 20:17:22', NULL, NULL, NULL, NULL, 1, 5),
+(24, '2020-04-27 20:17:34', NULL, NULL, NULL, NULL, 1, 7),
+(25, '2020-04-27 20:20:56', NULL, NULL, NULL, NULL, 1, 1),
+(26, '2020-04-27 20:21:23', NULL, NULL, NULL, NULL, 1, 6),
+(27, '2020-04-27 20:22:38', NULL, NULL, NULL, NULL, 1, 5),
+(28, '2020-04-27 20:23:14', NULL, NULL, NULL, NULL, 1, 1),
+(29, '2020-04-27 20:43:02', NULL, NULL, NULL, NULL, NULL, 7),
+(30, '2020-04-27 20:48:46', NULL, NULL, NULL, NULL, 1, 1),
+(31, '2020-04-27 20:59:17', NULL, NULL, NULL, NULL, 1, 6),
+(32, '2020-04-27 22:21:59', NULL, NULL, NULL, NULL, 1, 7),
+(33, '2020-04-27 22:24:41', '2020-04-27 21:34:04', '00:50:37', NULL, 1, 1, 5),
+(34, '2020-04-27 22:46:28', NULL, NULL, NULL, NULL, NULL, 7),
+(35, '2020-04-27 22:52:28', NULL, NULL, NULL, NULL, NULL, 7),
+(36, '2020-04-27 22:53:52', NULL, NULL, NULL, NULL, NULL, 7),
+(37, '2020-04-27 22:54:35', '2020-04-27 21:54:35', '01:00:00', NULL, 3, NULL, 7),
+(38, '2020-04-27 22:56:02', NULL, NULL, NULL, NULL, NULL, 1),
+(39, '2020-04-27 22:58:17', '2020-04-27 22:54:46', '00:03:31', NULL, 1, 1, 1),
+(40, '2020-04-27 23:55:12', NULL, NULL, NULL, NULL, 1, 5),
+(41, '2020-04-28 19:12:43', NULL, NULL, NULL, NULL, 1, 6),
+(42, '2020-04-28 19:25:13', NULL, NULL, NULL, NULL, 1, 1),
+(43, '2020-04-28 19:25:16', NULL, NULL, NULL, NULL, 1, 1),
+(44, '2020-04-28 19:25:47', NULL, NULL, NULL, NULL, 1, 5),
+(45, '2020-04-28 19:26:41', NULL, NULL, NULL, NULL, 1, 6),
+(46, '2020-04-28 19:31:54', NULL, NULL, NULL, NULL, 1, 5),
+(47, '2020-04-29 19:58:58', NULL, NULL, NULL, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -333,7 +385,7 @@ ALTER TABLE `games`
 -- AUTO_INCREMENT for table `game_players`
 --
 ALTER TABLE `game_players`
-  MODIFY `play_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `play_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `inbox`

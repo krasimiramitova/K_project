@@ -4,15 +4,28 @@
  		{$_SESSION['username']=$_POST['username'];}
 	if (isset($_POST['player_id']))	
 		{$_SESSION['player_id']=$_POST['player_id'];}
-	$_SESSION['level']=$_POST['level'];
-	$_SESSION['category']=$_POST['category'];
+	if (!isset($_SESSION['level']))
+		{if (isset($_POST['level']))
+			{$_SESSION['level']=$_POST['level'];}
+		else {$_SESSION['level']='easy';}
+		}
+		if (!isset($_SESSION['category']))
+		{if (isset($_POST['category']))
+			{$_SESSION['category']=$_POST['category'];}
+		else {$_SESSION['category']='animal';}
+		}
  	}
 
 if (!isset($_SESSION['guess_letters'])) 
 	{$_SESSION['guess_letters']=[];}									//an array that keeps all the picked letters from the form
 
-if (!isset($_SESSION['fails']))
-	{switch ($_SESSION['level']) 
+if (!isset($_SESSION['fails']))					//get data from database
+	{if (isset($_SESSION['level']))
+		{$level=($_SESSION['level']);}
+	else {$level='easy';
+		$_SESSION['level']=$level;	
+		}	
+	switch ($level) 
 		{case ('easy'):
 			$fails=10;
 			break;
