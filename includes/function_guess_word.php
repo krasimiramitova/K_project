@@ -2,8 +2,8 @@
 function guess_word($guess, $word)
 {	$guess=mb_strtoupper($guess);
 	if ($guess==$word)	
-		{$mistake=0;}
+		{$check_guess='right';}
 	else
-		{$mistake=1;}
-	return $mistake;
+		{$check_guess='wrong';}
+	return $check_guess;
 }	

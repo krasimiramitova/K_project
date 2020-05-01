@@ -212,7 +212,7 @@ echo '<div class="container">';
 	echo '</div>';
 	echo '<div class="col-md-3">';
 		//link to the bulgarian version
-		echo '<p><a class="btn btn-default" href="index_bg.php"> Български </a></p>';
+		echo '<p><a class="btn btn-default" href="index.php"> English </a></p>';
 		//choose a level and a category
 		if (!isset($_POST['play']))
 			{echo '<form action="" method="post">';

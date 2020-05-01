@@ -1,6 +1,6 @@
 <?php 
 
-  include '../includes/hangman_connect.php';
+include '../../includes/db_connect.php';
 
 
 ?>
@@ -56,7 +56,7 @@ if (isset($_POST["email"])) {
  $date_deleted =date("Y-m-d H:i:s");
 
 //2 insert_query
-$insert_query = "INSERT INTO `players`(`username`, `password`, `register_date`, `e-mail`, `date_deleted`) VALUES ('$username','$password','$date_added','$email','$date_deleted')";
+$insert_query = "INSERT INTO `players`(`username`, `password`, `register_date`, `e-mail`, `date_deleted`) VALUES ('".$username."','".$password."','".$date_added."','".$email."','".$date_deleted."')";
 
 //3
 $result = mysqli_query($conn, $insert_query);
