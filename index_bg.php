@@ -1,4 +1,3 @@
-
 <?php 
 include 'includes/header.php';
 include 'includes/function_guess_letter.php';
@@ -133,19 +132,19 @@ echo '<div class="container">';
 //			echo '<div class="col-md-8>';
 			echo '<img src="img/'.$_SESSION['fails' ].'.jpg" alt="'.$_SESSION['fails'].'" height="100%" width="100%">';
 			if ($_SESSION['fails']==1)
-				{echo 'You have '.$_SESSION['fails'].' mistake to make.';}
-			else {echo 'You have '.$_SESSION['fails'].' mistakes  to make.';}
+				{echo 'Имаш още '.$_SESSION['fails'].' допустими грешки .';}
+			else {echo 'Имаш още '.$_SESSION['fails'].' допустими грешки.';}
 			if ($_GET['letter']!=='')
 				{if (isset($_SESSION['username']))
-					{echo '<p>Make another guess,'.$_SESSION['username'].'!</p>';} 
-				else {echo '<p>Make another guess!</p>';
+					{echo '<p>Направи нов опит,'.$_SESSION['username'].'!</p>';} 
+				else {echo '<p>Направи нов опит!</p>';
 					//var_dump($_GET);
 					}
 				}
 			else 
 				{if (isset($_SESSION['username']))
-					{echo '<p>Make a guess,'.$_SESSION['username'].'!</p>';} 
-				else {echo '<p>Make a guess!</p>';}
+					{echo '<p>Направи опит,'.$_SESSION['username'].'!</p>';} 
+				else {echo '<p>Направи опит!</p>';}
 				}
 			include 'includes/letter_table_en.php';							//letter table
 			}
@@ -159,30 +158,30 @@ echo '<div class="container">';
 					$play_status=3;
 					echo '<img src="img/won.jpg" alt="won the game" height="100%" width="100%">';
 					if (isset($_SESSION['username']))
-						{echo '<p>You saved that man'.$_SESSION['username'].'!</p><p>Would you try to hang another one?</p>';
+						{echo '<p>Браво, ти спаси човека'.$_SESSION['username'].'!</p><p>Би ли искал да обесиш друг?</p>';
 						}
 					else
-						{echo '<p>You saved that man!</p><p>Would you try to hang another one?</p>';
-						echo '<p>You can <a class="btn btn-default" href="sign_up.php">sign up</a> or 
-						<a class="btn btn-default" href="login.php">login</a> if you want to get more options.</p>';
+						{echo '<p>Браво, ти спаси човека!</p><p>Би ли искал да обесиш друг?</p>';
+						echo '<p>You can <a class="btn btn-default" href="sign_up.php">Регистрирай се</a> or 
+						<a class="btn btn-default" href="login.php">Влез в профила си</a> Ако искаш да получиш още опции.</p>';
 						}
 					break;
 					case 'lost':
 						$play_status=1;
 						echo '<img src="img/hangman_family.jpg" alt="won the game" height="100%" width="100%">';
 						if (isset($_SESSION['username']))
-							{echo "<p>A hangman's familly lost their father</p><p>Would you try to save another one,".$_SESSION['username']."?</p>";
+							{echo "<p>Семейството загуби един от своите членове</p><p>Би ли искал да спасиш друг,".$_SESSION['username']."?</p>";
 							}
 						else 
-							{echo "<p>A hangman's familly lost their father</p><p>Would you try to save another one?</p>";}
+							{echo "<p>Семейството загуби един от своите членове</p><p>Би ли искал да спасиш друг?</p>";}
 					break;
 					case 'saved':
 						$play_status=5;	
 						if (isset($_SESSION['username']))
-							{echo "<p>You saved that game for later, ".$_SESSION['username'].".</p>";}
+							{echo "<p>Ти запази играта си, ".$_SESSION['username'].".</p>";}
 						else 
-							{echo '<p>You can <a class="btn btn-default" href="sign_up.php">sign up</a> or 
-					<a class="btn btn-default" href="login.php">login</a> if you want to be able to continue that game later.</p>';}	
+							{echo '<p>Можеш <a class="btn btn-default" href="sign_up.php">Да се регистрираш</a> или
+					<a class="btn btn-default" href="login.php">да влезеш в профила си</a> Ако искаш да продължиш играта си по-късно.</p>';}	
 				}
 
 //			include 'includes/session_transmitt.php';
@@ -201,39 +200,39 @@ echo '<div class="container">';
 			}
 		}	
 	else 
-		{echo "<h1>Welcome to hangman!</h1>
+		{echo "<h1>Добре дошъл в играта бесеница!</h1>
 		<img src='img/words_hurt.jpg' alt='Words hurt!' height='100%' width='100%'>
-			<p>This is version of the classic letter guessing game called Hangman. You are shown a set of blank letters that match a word or phrase and you have to guess what these letters are to reveal the hidden word. You guess by picking letters from a table. If you pick a letter that is in the word, it is revealed from the blank letters; however, if you pick a letter that is not in the word, then a stickman is slowly drawn. With each wrong letter guess, the man is drawn more and more. When the man is finished, he is hung and the game is lost. This is why the game is called 'Hangman'. If you can reveal all the letters in the word before the man is hung then you are successful and the full word is revealed. You can make a fast guess by using the field called fast guess.</p>
-			<p>You can save games for playing later. Also you can see how many games you've played, won or lost. You can challenge other players with words added by you. All that if you register and log in.</p>
-			<p>You can choose another language as well, if you don't want to play in English.</p>
-			<p>Use the buttons and forms at your right to navigate the app!</p>
-			<h2>Enjoy the game!</h2>";
+			<p>Това е версия на класическата игра за познаване на думи наречена бесеница. Виждаш поредица от празни полета, които отговарят на определена дума или фраза и ти трябва да познаеш какви са буквите за да разкриеш скритата дума. Познаваш като избираш букви от таблица. Ако познаеш буква, която се съдържа в думата,тя се показва на празното място. Въпреки това, ако посочиш буква,която не се съдържа в думата, тогава малко по-малко обесваш човека. Когато човека е довършен,той бива обесен и ти губиш играта. Заради това играта се казва 'Бесеница'. Ако успееш да разкриеш всички букви в думата преди човека да е обесен, тогава си успял да го спасиш и си разкрил цялата дума. Можеш да се опиташ да познаеш цялата дума наведнъж като използваш предназначеното поле за бърз опит.</p>
+			<p>Можеш да запазваш играта си. Също така можеш да видиш колко игри си изиграл,и колко от тях са спечелени или загубени. Можеш да предизвикваш други играчи с думи направени от теб.Всичко това важи само ако си се регистрирал или влязъл в профила си</p>
+			<p>Имаш възможността да си избереш друг език,Ако не искаш да играеш на български език.</p>
+			<p>Използвай бутоните за да използваш приложението!</p>
+			<h2>Наслади се на играта!</h2>";
 		}	
 	echo '</div>';
 	echo '<div class="col-md-3">';
 		//link to the bulgarian version
-		echo '<p><a class="btn btn-default" href="index.php"> English </a></p>';
+		echo '<p><a class="btn btn-default" href="index.php"> Английски език</a></p>';
 		//choose a level and a category
 		if (!isset($_POST['play']))
 			{echo '<form action="" method="post">';
 				//check for username
 				if (isset($_SESSION['username']))
-					{echo 'Choose a level and a category, '.$_SESSION['username'].'!<p>';}
-				echo '<p>Choose a level</p><p>';
+					{echo 'Избери ниво и категория, '.$_SESSION['username'].'!<p>';}
+				echo '<p>Избери ниво</p><p>';
 				include 'includes/read_from_levels.php';
-				echo '</p><p>Choose a category</p><p>';
+				echo '</p><p>Избери категория</p><p>';
 				include 'includes/read_from_categories.php';
 				echo '</p>';
-			echo '<p><input class="btn btn-default" type="submit" name="play" value="PLAY"></p>';
+			echo '<p><input class="btn btn-default" type="submit" name="play" value="Играй"></p>';
 				echo '</form>';
 			}
 		else
 			{	
 		//check for spelling of the word before category
 		if (substr($_SESSION['category'],0,1)=='a')
-			{echo '<p class="menu">You play to guess an '.$_SESSION['category'].'. <p>';}
+			{echo '<p class="menu">Играеш за да познаеш '.$_SESSION['category'].'. <p>';}
 			else
-			{echo '<p class="menu">You play to guess a '.$_SESSION['category'].'. <p>';}
+			{echo '<p class="menu">Играеш за да познаеш '.$_SESSION['category'].'. <p>';}
 		//echo '<p class="menu">level: '.$_SESSION['level'].'<p>';
 		//echo 'login, register, choose: category&level,fast guess';
 			echo '<form autocomplete="off" method="post" action="">
@@ -243,20 +242,20 @@ echo '<div class="container">';
 			</form>';
 			}
 		if (!isset($_SESSION['player_id']))
-			{echo '<p><a class="btn btn-default" href="pages/en/login.php">Login</a></p>';
-			echo '<p><a class="btn btn-default" href="sign_up.php">Sign up</a></p>';
+			{echo '<p><a class="btn btn-default" href="pages/en/login.php">Влез в профила си</a></p>';
+			echo '<p><a class="btn btn-default" href="sign_up.php">Регистрирай се</a></p>';
 			}
 		else 
-			{echo '<p><a class="btn btn-default" href="logout.php">Logout</a></p>';
-			echo '<p><a class="btn btn-default" href="challenge.php">Challenge</a></p>';
+			{echo '<p><a class="btn btn-default" href="logout.php">Излез от профила си</a></p>';
+			echo '<p><a class="btn btn-default" href="challenge.php">Предизвикай</a></p>';
 			}
 		if (isset($_POST['play']))	
 			{echo '<p><form method="post" action="">
-			<input class="btn btn-default" type="submit" name="save_game" value="SAVE">
+			<input class="btn btn-default" type="submit" name="save_game" value="Запази">
 			</form></p>';
 			}
 		if (isset($_SESSION['player_id']))
-			{echo '<p><a class="btn btn-default" href="pages/en/home.php">HOME</a></p>';
+			{echo '<p><a class="btn btn-default" href="pages/en/home.php">Вкъщи</a></p>';
 			}
 	echo '</div>';
 
